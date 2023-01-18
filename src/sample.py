@@ -50,7 +50,8 @@ if __name__ == "__main__":
         bookmark_number = bookmark.text
         
         # # CSVデータを格納する変数を定義
-        article_code = 121837
+        article_code = target_url[-6:]
+        
         csv_text = str(article_code)
 
         # データにコロンを付けて変数に格納
