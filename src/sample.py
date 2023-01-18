@@ -27,13 +27,9 @@ if __name__ == "__main__":
         soup = BeautifulSoup(html.content, 'html.parser')
         
         # 記事タイトルの取得
-        hatebu_titles = soup.find_all("h1")
-        # コミュニティタイトル, 記事タイトルは二番目
-        hatebu_title = hatebu_titles[1]
-        hatebu_title_element = hatebu_title.select("a")
-        # print(hatebu_title_element)
-        title = hatebu_title_element[0].text
-        # print(title)
+        blog_request = get(f"http://hatenablog.com/oembed?url={target_url}")
+        blog_json = blog_request.json()
+        title = blog_json["title"]
         
         # bookmark数の取得 -> 公式APIを使用する
         bookmark = get(f"https://bookmark.hatenaapis.com/count/entry?url={target_url}")
