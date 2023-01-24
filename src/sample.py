@@ -1,22 +1,16 @@
-from bs4 import BeautifulSoup
 from requests import get
-from time import sleep
-from pprint import pprint
 from time import sleep
 import os
 
-from dateutil import parser
 from datetime import datetime
-
-import csv
 
 # リクエスト間隔を指定(秒)　※サーバに負荷をかけないよう3秒以上を推奨
 INTERVAL = 3
 # はてブデータを格納するCSVファイルの保存先を指定
 HATEBU_FILE_DIR = "./output/hatebu/csv/"
 # はてブデータを格納するCSVファイルの名前を指定
-date = datetime.today().strftime('%Y%m%d')
-HATEBU_FILE_NAME = f"hatebu_{date}.csv"
+create_date = datetime.today().strftime('%Y%m%d')
+HATEBU_FILE_NAME = f"hatebu_{create_date}.csv"
 
 HATEBU_FILE_HEADER = "code,title,bookmark_num,published\n"
 
@@ -35,13 +29,9 @@ with open(HATEBU_FILE_DIR + HATEBU_FILE_NAME, "w", encoding="shift_jis") as csv_
 if __name__ == "__main__":
     
     for target_url in target_url_list:
-        html = get(target_url)
-        soup = BeautifulSoup(html.content, 'html.parser')
-        
         # 記事タイトルの取得
         blog_request = get(f"http://hatenablog.com/oembed?url={target_url}")
         blog_json = blog_request.json()
-        # pprint(blog_json)
         title = blog_json["title"]
         published = blog_json["published"]
         
