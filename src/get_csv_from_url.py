@@ -7,7 +7,7 @@ from datetime import datetime
 # リクエスト間隔を指定(秒)　※サーバに負荷をかけないよう3秒以上を推奨
 INTERVAL = 3
 # はてブデータを格納するCSVファイルの保存先を指定
-HATEBU_FILE_DIR = "./output/hatebu/csv/"
+HATEBU_FILE_DIR = "./output/csv/"
 # はてブデータを格納するCSVファイルの名前を指定
 create_date = datetime.today().strftime('%Y%m%d')
 HATEBU_FILE_NAME = f"hatebu_{create_date}.csv"
