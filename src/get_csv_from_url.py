@@ -3,6 +3,8 @@ from time import sleep
 import os
 
 from datetime import datetime
+import json
+from urllib.parse import urlparse
 
 # リクエスト間隔を指定(秒)　※サーバに負荷をかけないよう3秒以上を推奨
 INTERVAL = 3
@@ -12,15 +14,14 @@ HATEBU_FILE_DIR = "./output/csv/"
 create_date = datetime.today().strftime('%Y%m%d')
 HATEBU_FILE_NAME = f"hatebu_{create_date}.csv"
 
-HATEBU_FILE_HEADER = "code,title,bookmark_num,published\n"
+HATEBU_FILE_HEADER = "entry_code,title,bookmark_num,published,categories,url\n"
 
 # URLの固定部分を指定
 # FIXED_URL = "https://link-and-motivation.hatenablog.com/entry/"
 
-target_url_list = [
-    "https://link-and-motivation.hatenablog.com/entry/2022/12/28/094219",
-    "https://link-and-motivation.hatenablog.com/entry/2022/12/26/121837"
-]
+with open('./output/url/blog_url.json', 'r') as f:
+    target_url_list = json.load(f)
+# target_url_list = ["https://link-and-motivation.hatenablog.com/entry/four-keys-metrics-dashboard"]
 
 os.makedirs(HATEBU_FILE_DIR, exist_ok=True)
 with open(HATEBU_FILE_DIR + HATEBU_FILE_NAME, "w", encoding="shift_jis") as csv_file:
@@ -40,16 +41,20 @@ if __name__ == "__main__":
         bookmark = get(f"https://bookmark.hatenaapis.com/count/entry?url={target_url}")
         bookmark_number = bookmark.text
         
-        # # CSVデータを格納する変数を定義
-        article_code = target_url[-6:]
+        # 記事のentry以下を取得する
+        parsed_url = urlparse(target_url)
+        element_list = parsed_url.path.split('/')
+        # listからentryを見つける
+        entry_index = element_list.index("entry")
+        article_code = '/'.join(element_list[entry_index+1:])
         
         csv_text = str(article_code)
 
         # データにコロンを付けて変数に格納
-        csv_text += "," + title + "," + bookmark_number + "," + published + "," + categories
+        csv_text += "," + title + "," + bookmark_number + "," + published + "," + categories + "," + target_url 
         print(csv_text)
         
-        with open(HATEBU_FILE_DIR + HATEBU_FILE_NAME, "a", encoding="shift_jis") as csv_file:
+        with open(HATEBU_FILE_DIR + HATEBU_FILE_NAME, "a") as csv_file:
             csv_file.write(csv_text + "\n")
         
         # 時間おく

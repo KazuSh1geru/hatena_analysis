@@ -22,13 +22,13 @@ while True:
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # 記事のURLを抽出する
-    for link in soup.find_all('a'):
+    for link in soup.find_all('a', class_="entry-title-link"):
         href = link.get('href')
         if href and href.startswith(f'{TARGET_ACCOUNT_URL}/entry/'):
             entry_urls.append(href)
 
     # 次のページがある場合、ページネーションのリンクを取得する
-    next_page_link = soup.find('a', {'class': 'next'})
+    next_page_link = soup.find('a', {'rel': 'next'})
 
     # 次のページがない場合は処理を終了する
     if not next_page_link:
@@ -49,4 +49,4 @@ for entry_url in entry_urls:
     print(entry_url)
     
 with open(f'{URL_FILE_DIR}/blog_url.json', 'w') as f:
-    json.dump(entry_urls, f, indent=2)
+    json.dump(entry_urls, f, indent=1)
