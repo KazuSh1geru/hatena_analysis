@@ -2,7 +2,17 @@
 - はてなブログの解析を行う
 
 
-# サンプルの実行
+# 構造
+.
+├── README.md
+├── output
+│   └── hatebu
+│       └── csv
+│           └── hatebu_20230219.csv
+├── requirement.txt
+└── src
+    ├── get_csv_from_url.py
+    └── get_url.py
 
 ```
 $ python src/sample.py
