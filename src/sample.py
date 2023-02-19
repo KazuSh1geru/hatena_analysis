@@ -34,6 +34,7 @@ if __name__ == "__main__":
         blog_json = blog_request.json()
         title = blog_json["title"]
         published = blog_json["published"]
+        categories = ','.join(blog_json["categories"])  # categoriesがリストなので文字列に変換
         
         # bookmark数の取得 -> 公式APIを使用する
         bookmark = get(f"https://bookmark.hatenaapis.com/count/entry?url={target_url}")
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         csv_text = str(article_code)
 
         # データにコロンを付けて変数に格納
-        csv_text += "," + title + "," + bookmark_number + "," + published
+        csv_text += "," + title + "," + bookmark_number + "," + published + "," + categories
         print(csv_text)
         
         with open(HATEBU_FILE_DIR + HATEBU_FILE_NAME, "a", encoding="shift_jis") as csv_file:
