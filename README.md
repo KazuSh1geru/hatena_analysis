@@ -3,16 +3,17 @@
 
 
 # 構造
+```
 .
 ├── README.md
 ├── output
-│   └── hatebu
-│       └── csv
-│           └── hatebu_20230219.csv
+│   └── csv
+│       └── hatebu_yyyymmdd.csv
 ├── requirement.txt
 └── src
     ├── get_csv_from_url.py
     └── get_url.py
+```
 
 ```
 $ python src/sample.py
