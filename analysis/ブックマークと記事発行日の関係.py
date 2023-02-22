@@ -73,3 +73,12 @@ plt.scatter(x, y)
 plt.title('relation between publised_hour and bookmark')
 plt.show()
 # %%
+x = published_hour_list
+y = bookmark_list
+
+# グラフの描画
+plt.scatter(x, y)
+plt.title('relation between publised_hour and bookmark')
+plt.show()
+
+# %%
