@@ -3,6 +3,7 @@
 
 
 # 構造
+```
 .
 ├── README.md
 ├── output
@@ -13,8 +14,9 @@
 └── src
     ├── get_csv_from_url.py
     └── get_url.py
-
 ```
+
+```bash: 実行方法
 $ python src/sample.py
 ```
 
